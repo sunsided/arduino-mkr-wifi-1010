@@ -1,0 +1,16 @@
+---
+extends: default
+
+yaml-files:
+  - '*.yaml'
+  - '*.yml'
+  - '.yamllint'
+
+# Default configuration:
+rules:
+  line-length: disable
+  new-line-at-end-of-file: enable
+  trailing-spaces: enable
+  truthy:
+    level: warning
+  comments-indentation: disable

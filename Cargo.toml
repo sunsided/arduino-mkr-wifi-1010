@@ -1,0 +1,16 @@
+[workspace]
+resolver = "2"
+members = [
+    "bins/firmware",
+]
+default-members = [
+    "bins/firmware"
+]
+
+[workspace.package]
+version = "0.1.0"
+description = "A Rust playground project for the Arduino MKR-WIFI-1010 board"
+authors = ["Markus Mayer"]
+repository = "git@github.com:sunsided/arduino-mkr-wifi-1010.git"
+readme = "README.md"
+license = "EUPL-1.2"

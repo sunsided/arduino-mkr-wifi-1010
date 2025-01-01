@@ -1,0 +1,32 @@
+---
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v2.3.0
+    hooks:
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
+
+  - repo: https://github.com/codespell-project/codespell
+    rev: v2.2.4
+    hooks:
+      - name: Check code spelling
+        id: codespell
+
+  - repo: https://github.com/thlorenz/doctoc
+    rev: v2.2.0
+    hooks:
+      - name: Generate Markdown Table of Contents
+        id: doctoc
+        args:
+          - --github
+          - --update-only
+
+  - repo: https://github.com/adrienverge/yamllint.git
+    rev: v1.33.0
+    hooks:
+      - name: Lint Yaml files
+        id: yamllint
+        args:
+          - --strict
+          - --config-file=.yamllint.yaml
+          - .
