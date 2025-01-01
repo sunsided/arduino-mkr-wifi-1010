@@ -9,3 +9,8 @@ pre-commit:
 # Build all targets.
 build WHAT="--all-targets":
     @cargo build {{ WHAT }}
+
+# Runs cargo-autoinherit on the workspace.
+autoinherit:
+    # cargo install --locked cargo-autoinherit
+    cargo autoinherit
