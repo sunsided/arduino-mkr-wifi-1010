@@ -43,9 +43,8 @@ Install `probe-rs`:
 curl --proto '=https' --tlsv1.2 -LsSf https://github.com/probe-rs/probe-rs/releases/latest/download/probe-rs-tools-installer.sh | sh
 ```
 
-Install `elf2uf2`:
+Install `bossac`, the Flash programmer for Atmel SAM devices:
 
 ```shell
-sudo apt install libudev-dev
-cargo install elf2uf2-rs
+sudo apt install bossa-cli
 ```
