@@ -13,4 +13,6 @@ description = "A Rust playground project for the Arduino MKR-WIFI-1010 board"
 authors = ["Markus Mayer"]
 repository = "git@github.com:sunsided/arduino-mkr-wifi-1010.git"
 readme = "README.md"
-license = "EUPL-1.2"
+license = "EUPL-1.2 or MIT or APACHE-2.0"
+keywords = ["no-std", "arm", "cortex-m", "embedded-hal", "arduino"]
+categories = ["embedded", "hardware-support", "no-std"]

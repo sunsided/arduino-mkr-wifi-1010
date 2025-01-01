@@ -6,9 +6,9 @@ help:
 pre-commit:
     @pre-commit run --all-files
 
-# Build all targets.
-build WHAT="--all-targets":
-    @cargo build {{ WHAT }}
+# Build all examples
+build:
+    @cargo build --examples --features=usb,unproven
 
 # Runs cargo-autoinherit on the workspace.
 autoinherit:
