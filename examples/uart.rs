@@ -5,6 +5,7 @@
 #![no_std]
 #![no_main]
 
+use atsamd_hal::nb;
 use bsp::hal;
 use bsp::pac;
 use firmware as bsp;
@@ -20,13 +21,13 @@ fn main() -> ! {
     let mut peripherals = Peripherals::take().unwrap();
     let core = CorePeripherals::take().unwrap();
     let mut clocks = GenericClockController::with_internal_32kosc(
-        peripherals.GCLK,
-        &mut peripherals.PM,
-        &mut peripherals.SYSCTRL,
-        &mut peripherals.NVMCTRL,
+        peripherals.gclk,
+        &mut peripherals.pm,
+        &mut peripherals.sysctrl,
+        &mut peripherals.nvmctrl,
     );
 
-    let pins = bsp::Pins::new(peripherals.PORT);
+    let pins = bsp::Pins::new(peripherals.port);
     let mut delay = hal::delay::Delay::new(core.SYST, &mut clocks);
 
     let mut red_led: bsp::Led = pins.d6.into_push_pull_output();
@@ -34,9 +35,9 @@ fn main() -> ! {
     // Setup UART peripheral.
     let mut uart = bsp::uart(
         &mut clocks,
-        9600.hz(),
-        peripherals.SERCOM5,
-        &mut peripherals.PM,
+        9600.Hz(),
+        peripherals.sercom5,
+        &mut peripherals.pm,
         pins.rx,
         pins.tx,
     );
@@ -52,7 +53,7 @@ fn main() -> ! {
                 // Echo all received characters.
                 nb::block!(uart.write(byte)).unwrap();
 
-                // Blink the red led to show that a character has arrived.
+                // Blink the red LED to show that a character has arrived.
                 red_led.set_high().unwrap();
                 delay.delay_ms(2u16);
                 red_led.set_low().unwrap();

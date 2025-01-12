@@ -31,15 +31,15 @@ dependencies = [
 
 [[package]]
 name = "atsamd-hal"
-version = "0.17.0"
+version = "0.18.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "84fba26d12e032c93fb0de8c0e0ff34fafea35192f61cd0fc247838d78cda22e"
+checksum = "d5284c890d6304a29e832b66fcfac31405f3039a312e0b27d28211470fad5d5b"
 dependencies = [
  "aes",
  "atsamd-hal-macros",
  "atsamd21g",
  "bitfield",
- "bitflags",
+ "bitflags 2.7.0",
  "cipher",
  "cortex-m",
  "defmt",
@@ -63,9 +63,9 @@ dependencies = [
 
 [[package]]
 name = "atsamd-hal-macros"
-version = "0.1.0"
+version = "0.2.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "b27ccb060a908ff8a40acde574902a6bd283d3420dd4ffcdb6a327225f55e098"
+checksum = "adc9147547ae008c2b37e432a52ab7a7d4f4ae264d7cabfd47667d273b38615d"
 dependencies = [
  "litrs",
  "phf",
@@ -76,9 +76,9 @@ dependencies = [
 
 [[package]]
 name = "atsamd21g"
-version = "0.13.0"
+version = "0.14.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "8dc7fa02c53f5039898dc16880423b13e5f27238466f3999790ff79330c8c00d"
+checksum = "165503d687b0fa331994b95aa2b98260f34111ba7c5e1a480cdc0cbae3106dc3"
 dependencies = [
  "cortex-m",
  "cortex-m-rt",
@@ -112,6 +112,12 @@ name = "bitflags"
 version = "1.3.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "bef38d45163c2f1dde094a7dfd33ccf595c92905c8f8f4fdc18d06fb1037718a"
+
+[[package]]
+name = "bitflags"
+version = "2.7.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "1be3f42a67d6d345ecd59f675f3f012d6974981560836e938c22b424b85ce1be"
 
 [[package]]
 name = "byteorder"
@@ -188,7 +194,7 @@ version = "0.3.10"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "86f6162c53f659f65d00619fe31f14556a6e9f8752ccc4a41bd177ffcf3d6130"
 dependencies = [
- "bitflags",
+ "bitflags 1.3.2",
  "defmt-macros",
 ]
 

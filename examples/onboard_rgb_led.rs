@@ -9,9 +9,11 @@
 #![no_std]
 #![no_main]
 
-use atsamd_hal::thumbv6m::clock::GClock;
+use atsamd_hal::clock::GClock;
 use bsp::hal;
 use core::time::Duration;
+use atsamd_hal::nb;
+use atsamd_hal::time::Nanoseconds;
 use firmware as bsp;
 
 use bsp::entry;
@@ -19,7 +21,6 @@ use hal::clock::GenericClockController;
 use hal::delay::Delay;
 use hal::pac::{CorePeripherals, Peripherals};
 use hal::prelude::*;
-use hal::time::MegaHertz;
 use hal::timer::{TimerCounter, TimerCounter5};
 use wifi_nina::transport::SpiTransport;
 
@@ -30,28 +31,28 @@ fn main() -> ! {
     let mut peripherals = Peripherals::take().unwrap();
     let core = CorePeripherals::take().unwrap();
     let mut clocks = GenericClockController::with_internal_32kosc(
-        peripherals.GCLK,
-        &mut peripherals.PM,
-        &mut peripherals.SYSCTRL,
-        &mut peripherals.NVMCTRL,
+        peripherals.gclk,
+        &mut peripherals.pm,
+        &mut peripherals.sysctrl,
+        &mut peripherals.nvmctrl,
     );
-    let pins = bsp::Pins::new(peripherals.PORT);
+    let pins = bsp::Pins::new(peripherals.port);
     let mut delay = Delay::new(core.SYST, &mut clocks);
 
     delay.delay_ms(BOOT_DELAY_MS);
 
     let spi = bsp::nina_spi_master(
         &mut clocks,
-        MegaHertz(8),
-        peripherals.SERCOM4,
-        &mut peripherals.PM,
+        8.MHz(),
+        peripherals.sercom4,
+        &mut peripherals.pm,
         pins.nina_sck,
         pins.nina_mosi,
         pins.nina_miso,
     );
 
     let gclk0 = clocks.gclk0();
-    let mut timer = Timer::new(peripherals.TC5, &mut clocks, &gclk0, &mut peripherals.PM);
+    let mut timer = Timer::new(peripherals.tc5, &mut clocks, &gclk0, &mut peripherals.pm);
 
     let spi_transport = SpiTransport::start(
         spi,
@@ -92,14 +93,14 @@ pub struct Timer {
 
 impl Timer {
     pub fn new(
-        tc5: bsp::pac::TC5,
+        tc5: bsp::pac::Tc5,
         clocks: &mut GenericClockController,
         gclk0: &GClock,
-        pm: &mut bsp::pac::PM,
+        pm: &mut bsp::pac::Pm,
     ) -> Self {
         let timer_clock = clocks.tc4_tc5(gclk0).unwrap();
         let mut timer = TimerCounter::tc5_(&timer_clock, tc5, pm);
-        timer.start(1.khz());
+        atsamd_hal::prelude::_embedded_hal_timer_CountDown::start(&mut timer, Nanoseconds::kHz(1));
         Timer {
             tc: timer,
             millis: 0,
@@ -107,7 +108,7 @@ impl Timer {
     }
 
     pub fn tick(&mut self) {
-        nb::block!(self.tc.wait()).ok();
+        nb::block!(atsamd_hal::prelude::_embedded_hal_timer_CountDown::wait(&mut self.tc)).ok();
         self.millis += 1;
     }
 

@@ -10,7 +10,6 @@
 #![no_std]
 #![no_main]
 
-use atsamd_hal::thumbv6m::usb::UsbBus;
 use bsp::hal;
 use core::time::Duration;
 use firmware as bsp;
@@ -23,6 +22,8 @@ use hal::prelude::*;
 use hal::time::MegaHertz;
 
 use core::fmt::Write;
+use atsamd_hal::fugit::Megahertz;
+use atsamd_hal::usb::UsbBus;
 use cortex_m::asm::delay as cycle_delay;
 use cortex_m::interrupt::free as disable_interrupts;
 use cortex_m::peripheral::NVIC;
@@ -49,20 +50,20 @@ fn main() -> ! {
     let mut peripherals = Peripherals::take().unwrap();
     let mut core = CorePeripherals::take().unwrap();
     let mut clocks = GenericClockController::with_internal_32kosc(
-        peripherals.GCLK,
-        &mut peripherals.PM,
-        &mut peripherals.SYSCTRL,
-        &mut peripherals.NVMCTRL,
+        peripherals.gclk,
+        &mut peripherals.pm,
+        &mut peripherals.sysctrl,
+        &mut peripherals.nvmctrl,
     );
-    let pins = bsp::Pins::new(peripherals.PORT);
+    let pins = bsp::Pins::new(peripherals.port);
     let mut delay = Delay::new(core.SYST, &mut clocks);
 
     // Setup USB
     let bus_allocator = unsafe {
         USB_ALLOCATOR = Some(bsp::usb_allocator(
-            peripherals.USB,
+            peripherals.usb,
             &mut clocks,
-            &mut peripherals.PM,
+            &mut peripherals.pm,
             pins.usb_dm,
             pins.usb_dp,
         ));
@@ -91,9 +92,9 @@ fn main() -> ! {
     // Setup Wifi module
     let spi = bsp::nina_spi_master(
         &mut clocks,
-        MegaHertz(8),
-        peripherals.SERCOM4,
-        &mut peripherals.PM,
+        Megahertz(8),
+        peripherals.sercom4,
+        &mut peripherals.pm,
         pins.nina_sck,
         pins.nina_mosi,
         pins.nina_miso,
