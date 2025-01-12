@@ -6,9 +6,14 @@ help:
 pre-commit:
     @pre-commit run --all-files
 
+
+# Run basic build
+build PROGRAM="blinky_basic":
+    cargo build --features=usb,unproven --release --example {{PROGRAM}}
+
 # Build all examples
-build:
-    @cargo build --examples --release --features=usb,unproven
+build-all:
+    cargo build --release --features=usb,unproven --examples
 
 # Run cargo-autoinherit on the workspace.
 autoinherit:

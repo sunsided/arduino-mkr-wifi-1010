@@ -5,14 +5,11 @@
 #![no_std]
 #![no_main]
 
+use defmt_rtt as _;
+use panic_probe as _;
+
 use firmware as bsp;
 use bsp::hal;
-
-#[cfg(not(feature = "use_semihosting"))]
-use panic_halt as _;
-#[cfg(feature = "use_semihosting")]
-use panic_semihosting as _;
-
 use bsp::entry;
 use hal::clock::GenericClockController;
 use hal::delay::Delay;
@@ -36,7 +33,10 @@ fn main() -> ! {
     loop {
         delay.delay_ms(500u32);
         led.set_high().unwrap();
+        defmt::info!("on");
+
         delay.delay_ms(1000u32);
         led.set_low().unwrap();
+        defmt::info!("off");
     }
 }
