@@ -7,6 +7,7 @@
 
 - [Pre-commit hooks](#pre-commit-hooks)
 - [Requirements](#requirements)
+- [Flashing and Running](#flashing-and-running)
 - [Arduino burning bootloader](#arduino-burning-bootloader)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -50,6 +51,13 @@ Install `bossac`, the Flash programmer for Atmel SAM devices:
 sudo apt install bossa-cli
 ```
 
+## Flashing and Running
+
+The setup uses probe-rs, so you can just call `cargo run`, or use `just`:
+
+```shell
+just run blinky_basic
+```
 
 ## Arduino burning bootloader
 
