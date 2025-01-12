@@ -13,9 +13,9 @@ use panic_halt as _;
 #[cfg(feature = "use_semihosting")]
 use panic_semihosting as _;
 
-use firmware as bsp;
 use bsp::hal;
 use bsp::pac;
+use firmware as bsp;
 use panic_halt as _;
 
 use bsp::entry;

@@ -7,6 +7,12 @@
 #[cfg(feature = "rt")]
 pub use cortex_m_rt::entry;
 
+#[allow(unused_imports)]
+use defmt_rtt as _;
+
+#[allow(unused_imports)]
+use panic_probe as _;
+
 pub use atsamd_hal as hal;
 pub use hal::ehal;
 pub use hal::pac;

@@ -10,23 +10,16 @@ keywords = ["no-std", "arm", "cortex-m", "embedded-hal", "arduino"]
 categories = ["embedded", "hardware-support", "no-std"]
 edition = "2021"
 
-[dependencies.cortex-m-rt]
-version = "0.7"
-optional = true
-
-[dependencies.atsamd-hal]
-version = "0.15"
-default-features = false
-
-[dependencies.usb-device]
-version = "0.2"
-optional = true
-
-[dev-dependencies]
-cortex-m = { version = "0.7.7", features = ["critical-section-single-core"] }
+[dependencies]
+atsamd-hal = {version = "0.15.1", default-features = false }
+cortex-m-rt = { version = "0.7.5", optional = true }
 defmt = "0.3.10"
 defmt-rtt = "0.4.1"
 panic-probe = { version = "0.3.2", features = ["print-defmt"] }
+usb-device = { version = "0.2.9", optional = true }
+
+[dev-dependencies]
+cortex-m = { version = "0.7.7", features = ["critical-section-single-core"] }
 usbd-serial = "0.1"
 wifi-nina = { git = "https://github.com/Foosvald/wifi-nina", branch = "invert-reset-logic-with-feature", features = ["reset-high"] }
 no-std-net = { version = "0.5.0", default-features = false }

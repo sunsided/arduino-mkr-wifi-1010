@@ -9,10 +9,10 @@
 #![no_std]
 #![no_main]
 
-use firmware as bsp;
 use atsamd_hal::thumbv6m::clock::GClock;
 use bsp::hal;
 use core::time::Duration;
+use firmware as bsp;
 
 #[cfg(not(feature = "use_semihosting"))]
 use panic_halt as _;
@@ -65,7 +65,7 @@ fn main() -> ! {
         pins.nina_cs.into_push_pull_output(),
         |d: Duration| delay.delay_ms(d.as_millis() as u32),
     )
-        .unwrap();
+    .unwrap();
     let mut wifi = wifi_nina::Wifi::new(spi_transport);
 
     // Full power is too strong to look at :)

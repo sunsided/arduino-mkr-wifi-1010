@@ -5,9 +5,9 @@
 #![no_std]
 #![no_main]
 
-use firmware as bsp;
 use bsp::hal;
 use bsp::hal::prelude::*;
+use firmware as bsp;
 
 #[cfg(not(feature = "use_semihosting"))]
 use panic_halt as _;

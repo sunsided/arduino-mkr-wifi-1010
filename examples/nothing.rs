@@ -1,8 +1,8 @@
 #![no_std]
 #![no_main]
 
-use firmware as bsp;
 use bsp::hal;
+use firmware as bsp;
 
 use panic_halt as _;
 

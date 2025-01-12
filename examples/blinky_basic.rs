@@ -5,15 +5,9 @@
 #![no_std]
 #![no_main]
 
-#[allow(unused_imports)]
-use defmt_rtt as _;
-
-#[allow(unused_imports)]
-use panic_probe as _;
-
-use firmware as bsp;
-use bsp::hal;
 use bsp::entry;
+use bsp::hal;
+use firmware as bsp;
 use hal::clock::GenericClockController;
 use hal::delay::Delay;
 use hal::pac::{CorePeripherals, Peripherals};
