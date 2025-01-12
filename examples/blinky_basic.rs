@@ -5,7 +5,10 @@
 #![no_std]
 #![no_main]
 
+#[allow(unused_imports)]
 use defmt_rtt as _;
+
+#[allow(unused_imports)]
 use panic_probe as _;
 
 use firmware as bsp;
