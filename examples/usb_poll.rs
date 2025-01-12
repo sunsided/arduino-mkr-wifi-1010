@@ -8,15 +8,9 @@
 #![no_std]
 #![no_main]
 
-#[cfg(not(feature = "use_semihosting"))]
-use panic_halt as _;
-#[cfg(feature = "use_semihosting")]
-use panic_semihosting as _;
-
-use firmware as bsp;
 use bsp::hal;
 use bsp::pac;
-use panic_halt as _;
+use firmware as bsp;
 
 use bsp::entry;
 use hal::clock::GenericClockController;
@@ -31,18 +25,18 @@ use usbd_serial::{SerialPort, USB_CLASS_CDC};
 fn main() -> ! {
     let mut peripherals = Peripherals::take().unwrap();
     let mut clocks = GenericClockController::with_internal_32kosc(
-        peripherals.GCLK,
-        &mut peripherals.PM,
-        &mut peripherals.SYSCTRL,
-        &mut peripherals.NVMCTRL,
+        peripherals.gclk,
+        &mut peripherals.pm,
+        &mut peripherals.sysctrl,
+        &mut peripherals.nvmctrl,
     );
 
-    let pins = bsp::Pins::new(peripherals.PORT);
+    let pins = bsp::Pins::new(peripherals.port);
 
     let usb_bus = bsp::usb_allocator(
-        peripherals.USB,
+        peripherals.usb,
         &mut clocks,
-        &mut peripherals.PM,
+        &mut peripherals.pm,
         pins.usb_dm,
         pins.usb_dp,
     );
@@ -50,10 +44,19 @@ fn main() -> ! {
     let mut serial = SerialPort::new(&usb_bus);
     let mut led: bsp::Led = pins.d6.into();
 
-    let mut usb_dev = UsbDeviceBuilder::new(&usb_bus, UsbVidPid(0x2222, 0x3333))
-        .manufacturer("Fake company")
-        .product("Serial port")
-        .serial_number("TEST")
+    let descriptors = [
+        StringDescriptors::new(LangID::EN_US)
+            .manufacturer("Fake company")
+            .product("Serial port")
+            .serial_number("TEST"),
+        StringDescriptors::new(LangID::DE)
+            .manufacturer("Falsche Firma")
+            .product("Serieller Port")
+            .serial_number("TEST")
+    ];
+
+    let mut usb_dev = UsbDeviceBuilder::new(&usb_bus, UsbVidPid(0xFFFF, 0x1337))
+        .strings(&descriptors).unwrap()
         .device_class(USB_CLASS_CDC)
         .build();
 
