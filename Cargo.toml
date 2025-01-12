@@ -11,11 +11,11 @@ categories = ["embedded", "hardware-support", "no-std"]
 edition = "2021"
 
 [dependencies]
-atsamd-hal = {version = "0.15.1", default-features = false }
+atsamd-hal = { version = "0.16.0", default-features = false }
 cortex-m-rt = { version = "0.7.5", optional = true }
-defmt = "1.0.0-rc.1"
-defmt-rtt = "1.0.0-rc.1"
-panic-probe = { version = "1.0.0-rc.1", features = ["print-defmt"] }
+defmt = "0.3.10"
+defmt-rtt = "0.4.1"
+panic-probe = { version = "0.3.2", features = ["print-defmt"] }
 usb-device = { version = "0.2.9", optional = true }
 
 [dev-dependencies]

@@ -322,7 +322,7 @@ pub fn spi_master(
     let (miso, mosi, sclk) = (miso.into(), mosi.into(), sck.into());
     let pads = spi::Pads::default().data_in(miso).data_out(mosi).sclk(sclk);
     spi::Config::new(pm, sercom, pads, clock.freq())
-        .baud(baud)
+        .baud(baud.into())
         .spi_mode(spi::MODE_0)
         .enable()
 }
@@ -345,7 +345,7 @@ pub fn nina_spi_master(
     let pads = spi::Pads::default().data_in(miso).data_out(mosi).sclk(sclk);
 
     spi::Config::new(pm, sercom, pads, clock.freq())
-        .baud(baud)
+        .baud(baud.into())
         .spi_mode(spi::MODE_0)
         .enable()
 }
