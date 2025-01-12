@@ -9,11 +9,6 @@ use bsp::hal;
 use bsp::hal::prelude::*;
 use firmware as bsp;
 
-#[cfg(not(feature = "use_semihosting"))]
-use panic_halt as _;
-#[cfg(feature = "use_semihosting")]
-use panic_semihosting as _;
-
 use bsp::entry;
 use hal::clock::GenericClockController;
 use hal::pac::{interrupt, CorePeripherals, Peripherals};

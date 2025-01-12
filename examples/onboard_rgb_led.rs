@@ -14,11 +14,6 @@ use bsp::hal;
 use core::time::Duration;
 use firmware as bsp;
 
-#[cfg(not(feature = "use_semihosting"))]
-use panic_halt as _;
-#[cfg(feature = "use_semihosting")]
-use panic_semihosting as _;
-
 use bsp::entry;
 use hal::clock::GenericClockController;
 use hal::delay::Delay;
