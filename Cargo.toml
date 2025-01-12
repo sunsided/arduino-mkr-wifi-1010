@@ -1,16 +1,69 @@
-[workspace]
-resolver = "2"
-members = [
-    "bins/firmware",
-]
-default-members = [
-    "bins/firmware"
-]
-
-[workspace.package]
+[package]
+name = "firmware"
 version = "0.1.0"
 description = "A Rust playground project for the Arduino MKR-WIFI-1010 board"
 authors = ["Markus Mayer"]
 repository = "git@github.com:sunsided/arduino-mkr-wifi-1010.git"
 readme = "README.md"
-license = "EUPL-1.2"
+license = "EUPL-1.2 or MIT or APACHE-2.0"
+keywords = ["no-std", "arm", "cortex-m", "embedded-hal", "arduino"]
+categories = ["embedded", "hardware-support", "no-std"]
+edition = "2021"
+
+[dependencies.cortex-m-rt]
+version = "0.7"
+optional = true
+
+[dependencies.atsamd-hal]
+version = "0.15"
+default-features = false
+
+[dependencies.usb-device]
+version = "0.2"
+optional = true
+
+[dev-dependencies]
+cortex-m = { version = "0.7.7", features = ["critical-section-single-core"] }
+defmt = "0.3.10"
+defmt-rtt = "0.4.1"
+panic-probe = { version = "0.3.2", features = ["print-defmt"] }
+usbd-serial = "0.1"
+wifi-nina = { git = "https://github.com/Foosvald/wifi-nina", branch = "invert-reset-logic-with-feature", features = ["reset-high"] }
+no-std-net = { version = "0.5.0", default-features = false }
+heapless = "0.7"
+
+[features]
+# ask the HAL to enable atsamd21g support
+default = ["rt", "atsamd-hal/samd21g"]
+rt = ["cortex-m-rt", "atsamd-hal/samd21g-rt"]
+usb = ["atsamd-hal/usb", "usb-device"]
+unproven = ["atsamd-hal/unproven"]
+
+# for cargo flash
+[package.metadata]
+chip = "ATSAMD21G18AU"
+
+[[example]]
+name = "nothing"
+
+[[example]]
+name = "blinky_basic"
+
+[[example]]
+name = "uart"
+
+[[example]]
+name = "usb_logging"
+required-features = ["usb", "unproven"]
+
+[[example]]
+name = "usb_poll"
+required-features = ["usb", "unproven"]
+
+[[example]]
+name = "onboard_rgb_led"
+required-features = ["usb", "unproven"]
+
+[[example]]
+name = "wifi"
+required-features = ["usb", "unproven"]
