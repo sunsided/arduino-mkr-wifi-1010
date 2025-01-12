@@ -44,10 +44,19 @@ fn main() -> ! {
     let mut serial = SerialPort::new(&usb_bus);
     let mut led: bsp::Led = pins.d6.into();
 
-    let mut usb_dev = UsbDeviceBuilder::new(&usb_bus, UsbVidPid(0x2222, 0x3333))
-        .manufacturer("Fake company")
-        .product("Serial port")
-        .serial_number("TEST")
+    let descriptors = [
+        StringDescriptors::new(LangID::EN_US)
+            .manufacturer("Fake company")
+            .product("Serial port")
+            .serial_number("TEST"),
+        StringDescriptors::new(LangID::DE)
+            .manufacturer("Falsche Firma")
+            .product("Serieller Port")
+            .serial_number("TEST")
+    ];
+
+    let mut usb_dev = UsbDeviceBuilder::new(&usb_bus, UsbVidPid(0xFFFF, 0x1337))
+        .strings(&descriptors).unwrap()
         .device_class(USB_CLASS_CDC)
         .build();
 
