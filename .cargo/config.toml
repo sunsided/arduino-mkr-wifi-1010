@@ -12,8 +12,7 @@ runner = 'probe-rs run --chip ATSAMD21G18AU'
 linker = "arm-none-eabi-ld"
 rustflags = [
     "-C", "link-arg=-Tlink.x",
-    "-C", "link-arg=--nmagic",
-    "-C", "link-arg=-Tdefmt.x",
+    "-C", "link-arg=--nmagic"
 ]
 
 [profile.dev]

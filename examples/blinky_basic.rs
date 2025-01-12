@@ -34,7 +34,7 @@ fn main() -> ! {
     let mut delay = Delay::new(core.SYST, &mut clocks);
 
     loop {
-        delay.delay_ms(1000u32);
+        delay.delay_ms(500u32);
         led.set_high().unwrap();
         delay.delay_ms(1000u32);
         led.set_low().unwrap();

@@ -47,6 +47,9 @@ use_semihosting = []
 chip = "ATSAMD21G18AU"
 
 [[example]]
+name = "nothing"
+
+[[example]]
 name = "blinky_basic"
 
 [[example]]
