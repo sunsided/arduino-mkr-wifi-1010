@@ -17,6 +17,9 @@ rustflags = [
 ]
 
 [profile.dev]
+opt-level = 0
+
+[profile.dev.package."*"]
 opt-level = "s"
 
 [profile.release]
