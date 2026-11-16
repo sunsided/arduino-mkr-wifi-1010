@@ -9,7 +9,7 @@ target = "thumbv6m-none-eabi"
 [target.'cfg(all(target_arch = "arm", target_os = "none"))']
 # runner = 'gdb-multiarch -q -x multiarch.gdb'
 runner = 'probe-rs run --chip ATSAMD21G18AU'
-linker = "arm-none-eabi-ld"
+linker = "rust-lld"
 rustflags = [
     "-C", "link-arg=-Tlink.x",
     "-C", "link-arg=--nmagic",

@@ -1,0 +1,4 @@
+# atsamd-hal 0.15 doesn't compile on newer Rust (never-type `!` errors in sercom).
+[toolchain]
+channel = "1.85"
+targets = ["thumbv6m-none-eabi"]
